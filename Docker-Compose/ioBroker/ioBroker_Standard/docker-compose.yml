@@ -1,8 +1,10 @@
 version: '3.9'
 services:
     iobroker:
-        image: 'buanet/iobroker:latest-v8'
-        restart: unless-stopped
+        image: 'buanet/iobroker:${IOBROKER_VERSION}'
+        restart: always
+        hostname: ${IOBROKER_HOSTNAME}
+        container_name: iobroker
         environment:
             - USBDEVICES=
             - TZ=Europe/Berlin
@@ -22,7 +24,6 @@ services:
             - '${IOBROKER_PATH}:/opt/iobroker:rw'
         networks:
             host: {}
-        hostname: Proxmox
-        container_name: iobroker
+
 networks:
     host: {}
