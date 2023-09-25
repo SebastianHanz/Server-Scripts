@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  iobroker:
+    container_name: iobroker
+    image: buanet/iobroker:${IOBROKER_VERSION}
+    hostname: ${IOBROKER_HOSTNAME}
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      - USBDEVICES=
+      - TZ=Europe/Berlin
+      - ZWAVE=false
+      - AVAHI=false
+      - IOB_STATESDB_TYPE=redis
+      - IOB_STATESDB_PORT=6379
+      - IOB_STATESDB_HOST=127.0.0.1
+      - IOB_OBJECTSDB_TYPE=redis
+      - IOB_OBJECTSDB_PORT=6379
+      - IOB_OBJECTSDB_HOST=127.0.0.1
+      - IOB_STATESDB_PASS=${IOBROKER_REDIS_PASSWORD}
+      - IOB_MULTIHOST=master
+      - IOB_ADMINPORT=8081
+      - SETGID=1000
+      - SETUID=1000
+    volumes:
+      - '${IOBROKER_PATH}:/opt/iobroker:rw'
+    depends_on:
+      - redis
+ 
+  redis:
+      image: 'bitnami/redis:latest'
+      container_name: iobroker-redis
+      restart: unless-stopped
+      user: '1000'  
+      network_mode: "host"
+      volumes:
+          - '${IOBROKER_REDIS_PATH}:/bitnami'
+      environment:
+          - REDIS_IO_THREADS_DO_READS=yes
+          - REDIS_IO_THREADS=4
+          - REDIS_PASSWORD=
+          - ALLOW_EMPTY_PASSWORD=yes
+
