@@ -29,6 +29,7 @@ services:
  
   redis:
       image: 'bitnami/redis:latest'
+      hostname: redis
       container_name: iobroker-redis
       restart: unless-stopped
       user: '1000'  
