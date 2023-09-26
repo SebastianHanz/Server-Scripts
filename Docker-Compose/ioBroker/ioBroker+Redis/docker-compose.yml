@@ -35,7 +35,7 @@ services:
       user: '1000'  
       network_mode: "host"
       volumes:
-          - '${IOBROKER_REDIS_PATH}:/bitnami'
+          - '${IOBROKER_REDIS_PATH}:/bitnami:rw'
       environment:
           - REDIS_IO_THREADS_DO_READS=yes
           - REDIS_IO_THREADS=4
