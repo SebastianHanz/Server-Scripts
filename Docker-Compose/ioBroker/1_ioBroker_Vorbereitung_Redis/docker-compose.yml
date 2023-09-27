@@ -38,5 +38,5 @@ services:
         environment:
             - REDIS_IO_THREADS_DO_READS=yes
             - REDIS_IO_THREADS=4
-            - REDIS_PASSWORD=
+            - REDIS_PASSWORD= #leave this empty
             - ALLOW_EMPTY_PASSWORD=yes
