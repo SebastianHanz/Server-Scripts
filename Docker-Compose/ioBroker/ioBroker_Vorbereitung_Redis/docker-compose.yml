@@ -17,9 +17,26 @@ services:
             - IOB_OBJECTSDB_TYPE=jsonl
             - IOB_OBJECTSDB_PORT=9001
             - IOB_OBJECTSDB_HOST=0.0.0.0
+            - IOB_STATESDB_PASS= #leave this empty
             - IOB_MULTIHOST=master
             - IOB_ADMINPORT=8081
             - SETGID=1000
             - SETUID=1000
         volumes:
             - '${IOBROKER_PATH}:/opt/iobroker:rw'
+
+
+    redis:
+        image: 'bitnami/redis:latest'
+        hostname: redis
+        container_name: iobroker-redis
+        network_mode: "host"       
+        restart: unless-stopped
+        user: '1000'  
+        volumes:
+            - '${IOBROKER_REDIS_PATH}:/bitnami:rw'
+        environment:
+            - REDIS_IO_THREADS_DO_READS=yes
+            - REDIS_IO_THREADS=4
+            - REDIS_PASSWORD=
+            - ALLOW_EMPTY_PASSWORD=yes
